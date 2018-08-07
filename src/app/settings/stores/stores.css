@@ -1,0 +1,7 @@
+.edit-modal.nsm-dialog-open.nsm-dialog {
+  /*z-index: 9999;*/
+  position: fixed;
+  top: 10%;
+
+  /*max-width: 50%;*/
+}

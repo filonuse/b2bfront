@@ -1,0 +1,58 @@
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0">
+
+  <div class="card-header bg-transparent border-0 pb-0 mb-0">
+    <div class="card-title d-flex flex-row justify-content-between align-items-center pb-0 mb-0">
+      <div>
+        <span class="font-weight-bold h3 font-weight-bold text-muted">Онлайн чат</span>
+        <span class="font-weight-bold h3 font-weight-bold"> / {{recipientName}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <ul class="list-group-flush pl-0">
+      <li *ngFor="let message of messagesList"
+          [ngClass]="currentUser.id === message.from_user_id ?
+         'list-group-item d-flex flex-row pl-0':
+         'list-group-item d-flex flex-row-reverse pr-0'">
+        <div *ngIf="currentUser.id === message.from_user_id; then ownMessage else outerMessage"></div>
+
+        <ng-template #ownMessage>
+          <div class="col-2">
+            <!--<img [src]="currentUser.avatar || '../assets/default.png'" width="50px" height="50px">-->
+            <b>{{currentUser.name}}</b><br>
+            <small class="text-muted">{{parseTime(message.created_at.date)}}</small>
+          </div>
+          <div class="col-8 text-muted">
+            {{message.message}}
+          </div>
+        </ng-template>
+
+        <ng-template #outerMessage>
+          <div class="col-2">
+            <!--<img [src]="currentChatRoom.avatar || '../assets/default.png'" width="50px" height="50px">-->
+            <b class="text-primary">{{recipientName}}</b><br>
+            <small class="text-muted">{{parseTime(message.created_at.date)}}</small>
+          </div>
+          <div class="col-8 text-muted text-right">
+            {{message.message}}
+          </div>
+        </ng-template>
+
+      </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-9">
+          <label for="message" class="small text-muted">напишите сообщение</label>
+          <input id="message" type="text" class="form-control form-control-lg" [(ngModel)]="newMessage.message">
+        </div>
+        <div class="col-3 align-bottom">
+          <label for="btnMessage" class="small">&nbsp;</label>
+          <button id="btnMessage" type="button" class="col btn btn-lg btn-primary align-self-baseline"
+                  [disabled]="loading" (click)="sendMessage()">отправить</button>
+        </div>
+    </div>
+  </div>
+
+</div>

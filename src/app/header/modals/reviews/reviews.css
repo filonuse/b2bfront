@@ -1,0 +1,15 @@
+.review-name {
+  text-decoration: underline;
+  font-weight: bold;
+  color: dodgerblue;
+}
+.review-text {
+  color: gray;
+  font-size: 14px;
+}
+.review-star {
+  font-size: 20px;
+}
+#review-body {
+  padding: 20px 0;
+}

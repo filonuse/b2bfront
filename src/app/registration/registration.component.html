@@ -1,0 +1,162 @@
+<!--<div class="registration-main-container">-->
+<!--<div class="registration-block">-->
+<!--<h1>Регистрация нового пользователя</h1>-->
+<!--<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">-->
+<!--<div class="registration-block-field">-->
+<!--<input type="text" formControlName="name" placeholder="имя">-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Юридическое лицо-->
+<!--<input type="text" formControlName="legal_name">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Пароль-->
+<!--<input type="password" formControlName="password">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Подтвердить пароль-->
+<!--<input type="password" formControlName="password_confirmation">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Телефон-->
+<!--<input type="text" formControlName="phone">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Официальные данные-->
+<!--<input type="text" formControlName="official_data">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label>Реквизиты-->
+<!--<input type="text" formControlName="requisites">-->
+<!--</label>-->
+<!--</div>-->
+<!--<div *ngFor="let category of categoriesList">-->
+<!--<label>{{category.name}}-->
+<!--<input type="checkbox" [value]="category.id" (click)="setCategory(category)">-->
+<!--</label>-->
+
+<!--&lt;!&ndash;Категории&ndash;&gt;-->
+<!--&lt;!&ndash;<div formArrayName="categories" *ngFor="let categories of categories.controls; index as i">&ndash;&gt;-->
+<!--&lt;!&ndash;<label><input type="checkbox" value="i"> {{categories.value}}</label>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--</div>-->
+<!--<div>-->
+<!--<label>Пользовательское соглашение-->
+<!--<input type="checkbox" formControlName="privacy_policy">-->
+<!--</label>-->
+<!--</div>-->
+
+<!--<button type="submit">Регистрация</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="container">
+  <div class="row">
+    <div class="col-3">&nbsp;</div>
+    <div class="col-6">
+      <div class="card-header bg-transparent border-0 pb-0 mb-0">
+        <div class="card-title pb-0 mb-0 text-center">
+          <div>
+            <span class="h4">Регистрация нового пользователя</span>
+          </div>
+        </div>
+        <div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0">
+          <div class="card-body p-0">
+            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+              <ul class="list-group-flush pl-0">
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Название компании</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="name">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Юридическое лицо</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="legal_name">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Телефон</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="phone">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Email</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="email">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Пароль</label>
+                    <input class="form-control form-control-lg border-0" type="password" formControlName="password">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Подтвердить пароль</label>
+                    <input class="form-control form-control-lg border-0" type="password" formControlName="password_confirmation">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Официальные данные</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="official_data">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label class="small text-muted">Реквизиты</label>
+                    <input class="form-control form-control-lg border-0" type="text" formControlName="requisites">
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div *ngFor="let category of categoriesList" class="custom-control custom-checkbox">
+                    <input id="{{category.id}}" type="checkbox" class="custom-control-input" [value]="category.id"
+                           (click)="setCategory(category)">
+                    <label for="{{category.id}}" class="custom-control-label">{{category.name}}</label>
+
+                    <!--Категории-->
+                    <!--<div formArrayName="categories" *ngFor="let categories of categories.controls; index as i">-->
+                    <!--<label><input type="checkbox" value="i"> {{categories.value}}</label>-->
+                    <!--</div>-->
+
+                  </div>
+                </li>
+
+                <li class="list-group-item border-bottom-0">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="privacy_policy">
+                    <label class="form-check-label small text-muted">Я ознакомлен с условиями
+                      <span class="text-primary"><u>Лицензионного соглашения</u></span>
+                      и согласен с ними</label>
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary btn-lg col">Регистрация</button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">&nbsp;</div>
+  </div>
+</div>

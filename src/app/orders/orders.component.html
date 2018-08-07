@@ -1,0 +1,92 @@
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0" style="min-height: 54vh">
+
+    <div class="card-header bg-transparent border-0 pb-0 mb-0">
+      <div class="card-title pb-0 mb-0">
+        <div>
+          <span class="font-weight-bold h3">{{currentLanguage?.ordersList || 'SPISOK ZAKAZOV'}}</span>
+        </div>
+      </div>
+    </div>
+  <div class="card-body">
+    <div class="table">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr style="background-color: #F2F2F2">
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.ordersList || 'ID'}}</th>
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.customer}}</th>
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.orderDate}}</th>
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.shipDate}}</th>
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.sum}}</th>
+          <th class="small border-right-0 border-left-0">{{currentLanguage?.status}}</th>
+          <th class="small border-right-0 border-left-0" *ngIf="currentRole === 'provider'">##</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of ordersList">
+          <td class="align-middle border-right-0 border-left-0">
+            <!--<div (click)="openInfoModal(order)">{{order.id}}</div>-->
+            {{order.id}}
+          </td>
+          <td class="align-middle border-right-0 border-left-0">
+            <div>{{order.user.name}}</div>
+            <div class="text-muted small">{{order.user.legal_name}}</div>
+          </td>
+          <td class="align-middle border-right-0 border-left-0">{{parseDate(order.created_at.date)}}</td>
+          <td class="align-middle border-right-0 border-left-0">{{parseDate(order.shipped_at?.date)}}</td>
+          <td class="align-middle border-right-0 border-left-0">{{order.amount}}</td>
+          <td class="align-middle border-right-0 border-left-0">
+            <div *ngIf="currentRole === 'provider';then providerBlock else customerBlock"></div>
+            <ng-template #providerBlock>
+              <select class="border-0 bg-transparent custom-select" (change)="changeStatus(statusList.value, order)" #statusList
+                      [disabled]="checkStatus(order.current_status_id)">
+                <!--[ngClass]="parseStatus(order.current_status_id).id === order.current_status_id ?
+                parseStatus(order.current_status_id).name + '-status' : ''"-->
+
+                <option *ngFor="let status of ordersStatusList" [value]="status.id"
+                        style="background-color: white;color: black"
+                        [selected]="status.id === order.current_status_id">
+                  {{currentLanguage ? currentLanguage[status.name] : ''}}
+                  <!--{{status.name}}-->
+                </option>
+              </select>
+            </ng-template>
+            <ng-template #customerBlock>
+              {{parseStatus(order.current_status_id)?.name}}
+            </ng-template>
+            <!--{{parseStatus(order.current_status_id)}}-->
+          </td>
+          <td class="text-center align-middle border-right-0 border-left-0" *ngIf="currentRole === 'provider'">
+            <!--<button-->
+              <!--[disabled]="checkStatus(order.current_status_id)"-->
+              <!--class="btn btn-sm btn-success" (click)="detailedInfo(order)"><i-->
+              <!--class="font-weight-bold material-icons align-middle">create</i>-->
+            <!--</button>-->
+            <span [id]="order.id + 'open'" class="open-popover h3" (click)="currentPop = order.id">...</span>
+            <div class="popover-container">
+              <div [id]="order.id + 'triangle'" class="triangle"></div>
+              <div [id]="order.id + 'pop'" class="popover-block">
+                <div class="edit-popover small text-primary" (click)="detailedInfo(order)">
+                  {{currentLanguage?.edit}}
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--<ngx-smart-modal identifier="infoModal" #infoModal>-->
+<!--<pre>{{currentOrder | json}}</pre>-->
+<!--<ul class="list-group-flush" *ngIf="currentOrder">-->
+<!--<li class="list-group-item">-->
+<!--ID заказа : {{currentOrder.id}}-->
+<!--</li>-->
+<!--<li class="list-group-item">-->
+<!--<div>{{currentOrder.user.name}}</div>-->
+<!--<div>{{currentOrder.user.legal_name}}</div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</ngx-smart-modal>-->

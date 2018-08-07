@@ -1,0 +1,25 @@
+<h5>Отзывы пользователей</h5>
+<div id="review-body">
+  <ul class="list-group-flush pl-0">
+    <li class="list-group-item pl-0 pr-0 review-text" *ngFor="let review of reviewsList">
+      <div class="row">
+        <div class="col-9">
+          <span class="review-name">{{review.user.name}}</span>
+          <i *ngFor="let star of rating; let i = index"
+             class="material-icons text-warning review-star">
+            {{i < review.estimate ? 'star' : 'star_border'}}</i>
+        </div>
+        <div class="col-3 text-right">
+          <span class="font-weight-bold">{{parseDate(review.create_at.date)}}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <span>{{review.review}}</span>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</div>

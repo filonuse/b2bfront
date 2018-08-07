@@ -1,0 +1,101 @@
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0">
+
+  <div class="card-header bg-transparent border-0 pb-0 mb-0">
+    <div class="card-title d-flex flex-row justify-content-between align-items-center pb-0 mb-0">
+      <div>
+        <span class="font-weight-bold h3 font-weight-bold">Отчеты</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item border-top-0 border-bottom-0">
+        <div class="table" *ngIf="currentRole === 'customer'">
+          <table class="table table-hover">
+            <thead>
+            <th>Текущий месяц</th>
+            <th>Предыдущий месяц</th>
+            <th>Разница</th>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>{{customerTotalReport?.currentMonth}}</td>
+              <td>{{customerTotalReport?.lastMonth}}</td>
+              <td>{{customerTotalReport?.difference}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+
+      <li class="list-group-item border-top-0">
+        <div class="card-title">
+          <span class="h5">Общий отчет по клиентам</span>
+        </div>
+        <div class="table" *ngIf="currentRole === 'provider'">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr style="background-color: #F2F2F2">
+              <th class="small border-left-0 border-right-0">Название</th>
+              <th class="small border-left-0 border-right-0">Номенклатура</th>
+              <th class="small border-left-0 border-right-0">Количество поставок</th>
+              <th class="small border-left-0 border-right-0">Сума продаж</th>
+              <th class="small border-left-0 border-right-0">Средний заказ</th>
+              <th class="small border-left-0 border-right-0">##</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let reportRow of provCustList">
+              <td class="align-middle border-left-0 border-right-0">{{reportRow.name}}
+                <small class="text-muted">{{reportRow.legal_name}}</small>
+              </td>
+              <td class="align-middle border-left-0 border-right-0">{{reportRow.count_nomenclature}}</td>
+              <td class="align-middle border-left-0 border-right-0">{{reportRow.count_supplies}}</td>
+              <td class="align-middle border-left-0 border-right-0">{{reportRow.amount}}</td>
+              <td class="align-middle border-left-0 border-right-0">{{reportRow.avg_amount}}</td>
+              <td class="align-top border-left-0 border-right-0">
+                <span class="h3">...</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="card-title">
+          <span class="h5">Общий отчет по товарам</span>
+        </div>
+        <div class="table">
+          <table class="table table-hover table-bordered">
+            <thead>
+            <tr style="background-color: #F2F2F2">
+              <th class="small border-left-0 border-right-0">Название</th>
+              <th class="small border-left-0 border-right-0">Количество</th>
+              <th class="small border-left-0 border-right-0">Количесвто заказов</th>
+              <th class="small border-left-0 border-right-0">##</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reportRow of providerGoodsList">
+              <td class="align-middle border-right-0 border-left-0">{{reportRow.name}}</td>
+              <td class="align-middle border-right-0 border-left-0">{{reportRow.quantity}}</td>
+              <td class="align-middle border-right-0 border-left-0">{{reportRow.count_customers}}</td>
+              <td class="align-top border-right-0 border-left-0">
+                <span class="h3">...</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+
+
+    </ul>
+
+
+  </div>
+
+</div>

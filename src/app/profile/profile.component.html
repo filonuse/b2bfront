@@ -1,0 +1,32 @@
+<h1>Мой профиль</h1>
+
+<div class="row">
+  <div class="col-md-6 col ">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="font-weight-bold">Название компании : </span> {{userData.name}}
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">Юридическое лицо : </span> {{userData.legal_name}}
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">Официальные данные : </span> {{userData.official_data}}
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">Реквизиты : </span> {{userData.requisites}}
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">Категории товаров : </span>
+        <ul class="list-group-flush">
+          <li class="list-group-item" *ngFor="let category of userData.categories">{{category.name}}</li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">E-mail : </span> {{userData.email}}
+      </li>
+      <li class="list-group-item">
+        <span class="font-weight-bold">Phone : </span> {{userData.phone}}
+      </li>
+    </ul>
+  </div>
+</div>

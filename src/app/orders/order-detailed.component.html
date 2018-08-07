@@ -1,0 +1,58 @@
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0" *ngIf="currentOrder">
+  <div class="card-body border-0">
+    <div class="card-header bg-transparent pl-0">
+      <div class="card-title">
+        <h5>{{currentLanguage?.myOrders}} \ # {{currentOrder.id}}</h5>
+      </div>
+    </div>
+
+
+      <div class="table">
+        <table class="table table-hover table-bordered">
+          <thead>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.article}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.goodsPhoto}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.title}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.categories}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.brand}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.quantity}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.price}}</th>
+          <th class="small text-muted border-right-0 border-left-0">{{currentLanguage?.sum}}</th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let goods of currentOrder.goods">
+            <td class="align-middle border-right-0 border-left-0">{{goods.article}}</td>
+            <td class="align-middle border-right-0 border-left-0">
+              <img [src]="goods.images.url || '../assets/default.png'" class="rounded" width="50px" height="50px">
+            </td>
+            <td class="align-middle border-right-0 border-left-0">{{goods.name}}</td>
+            <td class="align-middle border-right-0 border-left-0">{{parseCategory(goods.category_id)}}</td>
+            <td class="align-middle border-right-0 border-left-0">{{goods.brand}}</td>
+            <td class="align-middle border-right-0 border-left-0">
+              <div class="d-flex flex-column align-items-center p-0 m-0">
+                <div class="up-triangle m-0" (click)="increase(goods)">&nbsp;</div>
+                <input class="col-6 form-control text-center m-0 p-0" min="0" pattern="{{regString}}"
+                       type="number" [(ngModel)]="goods.quantity">
+                <div class="down-triangle m-0" (click)="decrease(goods)">&nbsp;</div>
+              </div>
+            </td>
+            <td class="align-middle border-right-0 border-left-0">{{goods.price}}</td>
+            <td class="align-middle border-right-0 border-left-0">{{summRow(goods.price , goods.quantity)}}</td>
+          </tr>
+          <tr>
+            <td colspan="6" class="border-left-0 border-right-0 align-middle"></td>
+            <th class="border-left-0 border-right-0 align-middle">{{currentLanguage?.sum}} :</th>
+            <td class="border-left-0 border-right-0 align-middle">{{summ()}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+  </div>
+  <div class="card-footer border-0 bg-transparent">
+    <button class="btn btn-primary font-weight-bold" type="button" (click)="saveOrder()">{{currentLanguage?.save}}</button>
+  </div>
+</div>
+
+
+

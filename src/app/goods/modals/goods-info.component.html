@@ -1,0 +1,94 @@
+<div class="card border-0">
+  <div class="card-body border-0">
+    <div class="row border-0">
+      <div class="col-3">
+        <img [src]="currentGoods?.images[0]?.url || '../assets/default.png'" style="max-width: 100%">
+        <div class="d-flex flex-row justify-content-between mt-3">
+          <div class="border-0" *ngFor="let image of currentGoods?.images" style="max-width: 20%">
+            <img [src]="image.url" width="100%" height="30px">
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <ul class="list-group-flush border-0">
+          <li class="list-group-item border-0">
+            <div>
+              <h5 class="font-weight-bold text-primary">{{currentGoods?.name}}</h5>
+              <small>{{currentLanguage?.article}} : {{currentGoods?.article}}</small>
+            </div>
+          </li>
+
+          <li class="list-group-item border-0">
+            <div class="row border-0">
+              <div class="col">
+                <ul class="list-group border-0">
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.price}} :
+                      <del class="text-muted">{{setDiscount(currentGoods?.price, currentGoods?.discount).price}}</del>
+                      <b>{{setDiscount(currentGoods?.price, currentGoods?.discount).newPrice}}</b></small>
+                  </li>
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.quantity}} : <b>{{currentGoods?.quantity_actual}}</b></small>
+                  </li>
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.rating}} : <b>{{currentGoods?.rating}}</b></small>
+                  </li>
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.categories}} : <b>{{currentGoods?.category_id}}</b></small>
+                  </li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul class="list-group">
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.brand}} : <b>{{currentGoods?.brand}}</b></small>
+                  </li>
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.suppliers}} : <b>{{currentGoods?.provider.legal_name}}</b></small>
+                  </li>
+                  <li class="list-group-item border-0 p-0">
+                    <small>{{currentLanguage?.countryMade}} : <b>{{currentGoods?.country}}</b></small>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="list-group-item">
+            <small>{{currentGoods?.description}}</small>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="row border-0" *ngIf="currentRole === 'customer'">
+      <div class="col d-flex flex-row align-items-center p-0">
+        <div *ngIf="!isAlreadyInBag()" class="col-3 d-flex flex-row justify-content-center align-items-center p-0 ml-0">
+          <div class="left-triangle" [ngClass]="newOrder.quantity <= 0 ? 'disable-triangle' : ''"
+               (click)="decrease()"></div>
+          <input type="number" class="form-control border-0 text-center" style="font-size: 30px"
+                 [(ngModel)]="newOrder.quantity" (keyup)="checkQuantity()">
+          <div class="right-triangle" [ngClass]="newOrder.quantity >= this.currentGoods?.quantity_actual ?
+        'disable-triangle' : ''" (click)="increase()"></div>
+        </div>
+
+        <div class="col-3">
+          <div *ngIf="isAlreadyInBag(); then emptyBlock else buttonsBlock"></div>
+          <ng-template #buttonsBlock>
+            <button class="btn btn-primary" (click)="addToBag()" [disabled]="newOrder.quantity <= 0">{{currentLanguage?.makeOrder || 'ZAKAZAT'}}</button>
+          </ng-template>
+          <ng-template #emptyBlock>
+            <div class="text-muted">{{currentLanguage?.goodsAlreadyInBag || 'TOVAR V KORZINE'}}</div>
+          </ng-template>
+        </div>
+        <div class="col-3">
+          <button class="btn btn-primary" (click)="getDirectChat()">{{currentLanguage?.message}}</button>
+        </div>
+        <div class="col-3">
+          {{currentLanguage?.review}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

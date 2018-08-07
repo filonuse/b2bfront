@@ -1,0 +1,315 @@
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0">
+  <div class="card-header bg-transparent border-0 pb-0 mb-0">
+    <div class="card-title d-flex flex-row justify-content-between align-items-center pb-0 mb-0">
+      <div>
+        <span class="font-weight-bold h3 font-weight-bold">{{currentLanguage?.goodsCatalogue}}</span>
+      </div>
+      <div class="align-self-end">
+        <button class="btn-lg btn btn-primary" (click)="openModal(modalState.create)"
+                *ngIf="currentRole === 'provider'">
+          <i class="material-icons align-middle">add_circle_outline</i>
+          {{currentLanguage?.addGoods}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-9">
+        <ul class="nav pb-3" *ngIf="currentRole === 'provider'">
+          <li class="nav-item">
+            <a class="nav-link text-muted"
+               [ngClass]="filterModel.ownerId === currentId ? 'border-bottom border-primary text-primary': ''"
+               routerLink="/goods"
+               (click)="changeOwner(true)">{{currentLanguage?.myGoods.toUpperCase()}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted"
+               [ngClass]="filterModel.ownerId !== currentId ? 'border-bottom border-primary text-primary': ''"
+               routerLink="/goods" (click)="changeOwner(false)">{{currentLanguage?.allGoods.toUpperCase()}}</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="row justify-content-around">
+
+
+      <!--<div class="col-4 mt-3 text-center">-->
+      <!--<div>-->
+      <!--<a class="btn btn-outline-secondary" data-toggle="collapse" href="#categories" role="button"-->
+      <!--aria-expanded="false" aria-controls="collapseExample">-->
+      <!--фильтр по категориям-->
+      <!--</a>-->
+
+      <!--<div class="collapse" id="categories">-->
+      <!--<div class="card card-body">-->
+      <!--<div *ngFor="let category of categoryList">-->
+      <!--<input type="checkbox" (click)="doFilter(category)"> {{category.name}}-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <div class="table">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th [colSpan]="colspan" class="border-right border-left">
+                <div class="col">
+                  <div class="form-group">
+                    <!--<div class="input-group mb-3">-->
+                    <label class="small">{{currentLanguage?.goodsSearch}}</label>
+                    <input type="text" #searchField class="form-control form-control-lg border-0"
+                           aria-label="поиск товара"
+                           aria-describedby="searchField" (keyup)="autoCompleteFunc($event)">
+
+                    <!--<div class="input-group-append">-->
+                    <!--<button class="btn btn-outline-secondary" id="searchField"><i-->
+                    <!--class="material-icons align-middle">search</i></button>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                  </div>
+                </div>
+              </th>
+
+              <th colspan="3" class="border-right border-left" *ngIf="currentRole === 'customer'">
+                <div>
+                  <a class="btn btn-outline-secondary" data-toggle="collapse" href="#categories" role="button"
+                     aria-expanded="false" aria-controls="collapseExample">
+                    {{currentLanguage?.categoriesFilter}}
+                  </a>
+
+                  <div class="collapse" id="categories">
+                    <div class="card card-body">
+                      <div *ngFor="let category of categoryList">
+                        <input type="checkbox" (click)="doFilter(category)"> {{category.name}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </th>
+
+              <th [colSpan]="colspan" class="border-right">
+                <div class="col">
+                  <div class="form-group">
+                    <label class="small">{{currentLanguage?.sortBy}}</label>
+                    <select #sortList class="custom-select form-control-lg form-control border-0"
+                            (change)="doSort(sortList.value)">
+                      <option selected disabled class="small font-weight-bold"></option>
+                      <option class="small font-weight-bold" *ngFor="let select of selectList" [value]="select.sort">
+                        {{currentLanguage ? currentLanguage[select.name] : ''}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div></div>
+              </th>
+            </tr>
+            <tr style="background-color: #F2F2F2">
+              <th scope="col" class="small border-right-0">{{currentLanguage?.article}}</th>
+              <th scope="col" class="small border-right-0 border-left-0">{{currentLanguage?.goodsPhoto}}</th>
+              <th scope="col" class="small border-right-0 border-left-0">{{currentLanguage?.title}}</th>
+              <th scope="col" class="small border-right-0 border-left-0">{{currentLanguage?.countryMade}}</th>
+              <th scope="col" class="small border-right-0 border-left-0"
+                  [ngClass]="filterModel.ownerId === currentId ? 'border-right-0' : ''">{{currentLanguage?.price}}
+              </th>
+              <th scope="col" class="small border-right-0 border-left-0">{{currentLanguage?.quantityOnWarehouse}}</th>
+              <th scope="col" class="small border-right-0 border-left-0">{{currentLanguage?.quantityActual}}</th>
+              <th scope="col" class="small border-right-0 border-left-0" *ngIf="filterModel.ownerId === currentId">##
+              </th>
+            </tr>
+            </thead>
+            <tbody style="font-size: 15px">
+            <tr *ngFor="let goods of goodsList">
+              <td class="align-middle border-right-0 border-left-0">{{goods.article}}</td>
+              <td class="align-middle border-right-0 border-left-0"><img
+                [src]="goods.images[0]?goods.images[0].url:'../assets/default.png'"
+                width="35px" height="35px">
+              </td>
+              <td class="align-middle border-right-0 border-left-0">
+                <span style="cursor: pointer" class="text-primary font-weight-bold"
+                      (click)="openModal(modalState.info, goods)">
+                  <u>{{goods.name}}</u>
+                </span>
+              </td>
+              <td class="align-middle border-right-0 border-left-0">{{goods.country}}</td>
+              <td class="align-middle border-right-0 border-left-0 font-weight-bold"
+                  [ngClass]="filterModel.ownerId === currentId ? 'border-right-0' : ''">
+                <span [ngClass]="goods.discount > 0 ? 'old-price' : ''">{{setDiscount(goods.price, goods.discount).price}}</span>
+                <span *ngIf="goods.discount > 0">
+                {{setDiscount(goods.price, goods.discount).newPrice}}</span>
+              </td>
+              <td class="align-middle border-right-0 border-left-0 font-weight-bold">{{goods.quantity_actual}}</td>
+              <td class="align-middle border-right-0 border-left-0">{{goods.quantity_available}}</td>
+              <td class="text-center align-middle border-left-0" *ngIf="filterModel.ownerId === currentId">
+                <!--<button [disabled]="loading" class="btn btn-sm btn-success" (click)="openModal(modalState.edit, goods)">-->
+                  <!--<i-->
+                    <!--class="font-weight-bold material-icons align-middle">create</i></button>-->
+                <!--<button [disabled]="loading" class="btn btn-sm btn-warning" (click)="deleteGoods(goods)"><i-->
+                  <!--class="font-weight-bold material-icons align-middle">close</i>-->
+                <!--</button>-->
+                <span [id]="goods.id + 'open'" class="open-popover h3" (click)="currentPop = goods.id">...</span>
+                <div class="popover-container">
+                  <div [id]="goods.id + 'triangle'" class="triangle"></div>
+                  <div [id]="goods.id + 'pop'" class="popover-block">
+                    <div class="edit-popover small text-primary" (click)="openModal(modalState.edit, goods)">{{currentLanguage?.edit}}
+                    </div>
+                    <div class="edit-popover small text-danger" (click)="openModal(modalState.delete, goods)">{{currentLanguage?.delete}}
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!--<nav class="" *ngIf="filterModel.totalPages.length > 1">-->
+    <!--<ul class="pagination justify-content-center">-->
+    <!--&lt;!&ndash;<li class="page-item"&ndash;&gt;-->
+    <!--&lt;!&ndash;[ngClass]="{'disabled border-0': filterModel.page === filterModel.firstPage}">&ndash;&gt;-->
+    <!--&lt;!&ndash;<a class="page-link border-0" (click)="doPagination(filterModel.firstPage)">Первая</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+
+    <!--<li class="page-item"-->
+    <!--[ngClass]="{'disabled border-0': filterModel.page === filterModel.firstPage}">-->
+    <!--<a class="page-link border-0" (click)="doPagination(filterModel.page - 1)">Предыдущая</a>-->
+    <!--</li>-->
+
+    <!--<li class="page-item" [ngClass]="{'active border-0': filterModel.page === a}"-->
+    <!--*ngFor="let a of filterModel.totalPages | slice: slicePagination(filterModel.page).start: slicePagination(filterModel.page).end; let i = index">-->
+    <!--<a class="page-link border-0 rounded-circle m-1" (click)="doPagination(a)">{{a}}</a>-->
+    <!--</li>-->
+
+
+    <!--<li class="page-item"-->
+    <!--[ngClass]="{'disabled border-0': filterModel.page === filterModel.lastPage}">-->
+    <!--<a class="page-link border-0" (click)="doPagination(filterModel.page + 1)">Следующая</a>-->
+    <!--</li>-->
+
+    <!--&lt;!&ndash;<li class="page-item"&ndash;&gt;-->
+    <!--&lt;!&ndash;[ngClass]="{'disabled border-0': filterModel.page === filterModel.lastPage}">&ndash;&gt;-->
+    <!--&lt;!&ndash;<a class="page-link border-0" (click)="doPagination(filterModel.lastPage)">Последняя</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+    <!--</ul>-->
+    <!--</nav>-->
+
+  </div>
+</div>
+
+<nav class="">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"
+        [ngClass]="{'disabled border-0': filterModel.page === filterModel.firstPage}">
+      <a class="page-link border-0 mr-2 font-weight-bold" (click)="doPagination(filterModel.page - 1) "
+         style="color: #1D77C8">
+        <i class="material-icons align-middle">keyboard_arrow_left</i>
+        <u>{{currentLanguage?.previous}}</u>
+      </a>
+    </li>
+    <li class="page-item mr-1 ml-1"
+        [ngClass]="{'custom-active custom-round-box p-0': filterModel.page === a}"
+        *ngFor="let a of filterModel.totalPages | slice: slicePagination(filterModel.page).start: slicePagination(filterModel.page).end; let i = index">
+      <a class="page-link border-0 p-0 mr-1 ml-1 font-weight-bold" (click)="doPagination(a)">{{a}}</a>
+    </li>
+
+    <li class="page-item disabled" *ngIf="filterModel.page < 13 && filterModel.totalPages.length > 3">
+      <span class="page-link border-0 ml-2 font-weight-bold">...</span>
+    </li>
+    <li class="page-item" [ngClass]="{'custom-active custom-round-box p-0': filterModel.page === a}"
+        *ngIf="filterModel.page < 13 && filterModel.totalPages.length > 3">
+      <a class="page-link border-0 ml-2 font-weight-bold" (click)="doPagination(filterModel.lastPage)">{{filterModel.lastPage}}</a>
+    </li>
+
+    <li class="page-item"
+        [ngClass]="{'disabled border-0': filterModel.page === filterModel.lastPage}">
+      <a class="page-link border-0 ml-2 font-weight-bold" (click)="doPagination(filterModel.page + 1)"
+         style="color: #1D77C8">
+        <u>{{currentLanguage?.next}}</u>
+        <i class="material-icons align-middle m-0">keyboard_arrow_right</i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<ngx-smart-modal [identifier]="'addGoodsModal'" #addGoodsModal
+                 [customClass]="modalType !== modalState.delete ? 'goods-modal' : ''"
+                 (onAnyCloseEvent)="testClose()" [closable]="false">
+  <div class="container-fluid border-0">
+    <div class="row border-0">
+      <div class="col">
+        <app-goods-edit *ngIf="modalType === modalState.create || modalType === modalState.edit"
+                        [editMode]="editMode" [inputData]="currentData" (finish)="done()">
+        </app-goods-edit>
+
+        <app-goods-info *ngIf="modalType === modalState.info" [clear]="clearEvent" [inputData]="currentGoods"
+                        (finish)="done()"></app-goods-info>
+
+        <div class="card border-0 bg-transparent p-0 m-0" *ngIf="modalType === modalState.delete">
+          <div class="card-body bg-transparent p-0 m-0">
+            <div class="card-header bg-transparent">
+              <div class="card-title d-flex flex-row justify-content-between align-items-center">
+                <h5 class="font-weight-bold pt-2">{{currentLanguage?.deleteGoods}}</h5>
+                <div class="close-custom text-center" (click)="addGoodsModal.close()">
+                  <i class="material-icons align-middle" style="font-size: 20px; font-weight: bold">close</i>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group border-top-0 p-0 m-0">
+              <label for="{{currentGoods.category_id}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.category || 'category'}} : </label>
+              <span id="{{currentGoods.category_id}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.category_id}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.name}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.name}} : </label>
+              <span id="{{currentGoods.name}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.name}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.image}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.photo || 'фото'}} : </label>
+              <span id="{{currentGoods.image}}" class="small pl-2 ml-2 col-6 font-weight-bold">
+                <img [src]="currentGoods.images[0]?.url || '../../assets/default.png'" width="50px" height="50px">
+              </span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.price}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.price}} : </label>
+              <span id="{{currentGoods.price}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.price}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.rating}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.rating}} : </label>
+              <span id="{{currentGoods.rating}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.rating}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.brand}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.brand}} : </label>
+              <span id="{{currentGoods.brand}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.brand}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.provider.name}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.supplier || 'supplier'}} : </label>
+              <span id="{{currentGoods.provider.name}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.provider.name}}</span>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="{{currentGoods.country}}" class="small text-muted pr-2 mr-2 col-3">{{currentLanguage?.countryMade}} : </label>
+              <span id="{{currentGoods.country}}" class="small pl-2 ml-2 col-6 font-weight-bold">{{currentGoods.country}}</span>
+            </div>
+            <div class="card-footer bg-transparent text-center">
+
+                <button type="button" class="btn btn-lg btn-primary"
+                        (click)="deleteGoods(currentGoods)">{{currentLanguage?.deleteGoods}}</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>
+

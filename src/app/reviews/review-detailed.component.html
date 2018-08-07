@@ -1,0 +1,24 @@
+<div class="container-fluid" *ngIf="currentReview">
+
+  <h4>Отзыв от {{currentReview.user.name}}</h4>
+
+  <div class="row">
+    <div class="col-3 text-center">
+      <img [src]="'../../assets/default-user.png' || currentReview.user.avatar" width="180px" height="180px">
+      <div class="text-muted mt-2">{{currentReview.user.name}}</div>
+    </div>
+
+    <div class="col-9">
+      Отзыв : <br>
+      {{currentReview.review}}<br><br>
+
+      Оценка : <br>
+      <i *ngFor="let star of rating; let i = index" class="material-icons text-warning">
+        {{i < currentReview.estimate ? 'star' : 'star_border'}}
+      </i><br><br>
+
+      Дата : <br>
+      {{parseDate(currentReview.create_at.date)}}
+    </div>
+  </div>
+</div>

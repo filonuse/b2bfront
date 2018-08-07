@@ -1,0 +1,15 @@
+.side-menu-main-container {
+  margin: 0;
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/*@media (max-width: 576px) {*/
+  /*#move {position: initial!important;}*/
+
+/*}*/
+/*@media (min-width: 576px) {*/
+  /*#providerMove {position: fixed!important;}*/
+/*}*/

@@ -1,0 +1,168 @@
+<!--<div class="container-fluid">-->
+
+<!--<div class="row">-->
+<!--<div class="col">-->
+<!--<h2>1. Выберите категорию</h2>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="row">-->
+<!--<div class="col">-->
+<!--<div class="form-group">-->
+<!--<div class="row">-->
+<!--<div class="col" *ngFor="let block of blockList.columns;let i = index">-->
+<!--<div-->
+<!--*ngFor="let category of categoriesList |-->
+<!--slice:startPos(blockList.start, blockList.perColumn, i):endPos(blockList.end, blockList.perColumn, i)">-->
+<!--<div>-->
+<!--<label class="radio">-->
+<!--<input type="radio" name="category"-->
+<!--[checked]="category.id === goodsModel.category_id"-->
+<!--(change)="goodsModel.category_id = category.id">-->
+<!--<div class="radio-label">{{category.name}}</div>-->
+<!--</label>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="form-group" *ngFor="let field of fields">-->
+<!--<div-->
+<!--*ngIf="field.name !== 'id' && field.name !== 'images' && field.name !== 'category_id'-->
+<!--&& field.name !== 'provider' && field.name !== 'rating' && field.name !== 'discount'">-->
+<!--<label [for]="field.name">{{field.name}}</label>-->
+<!--<input [type]="field.type === 'string' ? 'text' : 'number'" [(ngModel)]="goodsModel[field.name]"-->
+<!--class="form-control" [id]="field.name">-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="form-group">-->
+<!--<app-image [inputData]="goodsModel.images" [editMode]="true" (readyForSave)="save($event)"-->
+<!--(closeForce)="closeModal()"></app-image>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<div class="card border-0 bg-transparent p-0 m-0">
+  <div class="card-body bg-transparent p-0 m-0">
+    <div class="card-header bg-transparent p-0">
+      <div class="card-title d-flex flex-row justify-content-between align-items-center pb-0">
+        <h4 class="font-weight-bold pl-2 pr-2 pt-4 pb-0">1. {{currentLanguage?.chooseCategory}}</h4>
+        <div class="close-custom text-center">
+          <i class="material-icons align-middle" style="font-size: 20px; font-weight: bold">close</i>
+        </div>
+      </div>
+      <h6 class="card-subtitle text-muted pl-2 pt-0 pb-4">{{currentLanguage?.chooseCategoryGoods}}</h6>
+
+      <div class="row border-top pl-2 border-bottom-0">
+        <div class="form-group pl-2 col border-bottom-0">
+          <label class="small pl-2 pb-0 mb-0">{{currentLanguage?.goodsCategoriesList}}</label>
+          <select #categoryList class="custom-select form-control-lg form-control border-0 pt-0 mt-0"
+                  (change)="goodsModel.category_id = categoryList.value">
+            <option selected disabled class="small font-weight-bold p-0">{{currentLanguage?.categories}}</option>
+            <option class="small font-weight-bold p-0" *ngFor="let category of categoriesList" [value]="category.id">
+              {{category.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row border-top pl-2 pt-2 pb-2">
+      <div class="col pl-2">
+        <h4 class="font-weight-bold pt-2 pl-2">2. ZAGALNI XARAKTERSYTYKY</h4>
+      </div>
+    </div>
+
+    <div class="row border-top">
+      <div class="col-6 border-right pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.nameGoods}}</label>
+          <input class="form-control form-control-lg border-0"  [(ngModel)]="goodsModel.name">
+        </div>
+      </div>
+
+      <div class="col-6 pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.brand}}</label>
+          <input class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.brand">
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-top">
+      <div class="col-6 border-right pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.countryMade}}</label>
+          <input class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.country">
+        </div>
+      </div>
+
+      <div class="col-6 pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.article}}</label>
+          <input class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.article">
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-top">
+      <div class="col-6 border-right pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.price}}</label>
+          <input class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.price">
+        </div>
+      </div>
+
+      <div class="col-6 pt-1 pb-1">
+        <div class="form-group pt-1 pb-1">
+          <label class="small text-muted p-0 m-0">{{currentLanguage?.quantity}}</label>
+          <input class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.quantity_actual">
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-top pl-2 pt-2 pb-2">
+      <div class="pl-2">
+        <h4 class="font-weight-bold pt-2 pl-2">3. {{currentLanguage?.detailedDescription}}</h4>
+      </div>
+    </div>
+
+    <div class="row border-top">
+      <div class="col-6 border-right">
+        <div class="form-group">
+
+          <label class="small text-muted">{{currentLanguage?.goodsDescription}}</label>
+          <textarea class="form-control form-control-lg border-0" [(ngModel)]="goodsModel.description"></textarea>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label class="small text-muted">zobrajennya</label>
+          <app-image [inputData]="goodsModel.images" [editMode]="true" (readyForSave)="save($event)"
+            (closeForce)="closeModal()" class="col"></app-image>
+
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent text-center">
+      <div *ngIf="!editMode; then createButton else editButton"></div>
+      <ng-template #createButton>
+        <button type="button" class="btn btn-lg btn-primary" (click)="addCategory()">{{currentLanguage?.save}}</button>
+      </ng-template>
+      <ng-template #editButton>
+        <button type="button" class="btn btn-lg btn-primary" (click)="editCategory()">{{currentLanguage?.edit}}</button>
+      </ng-template>
+      <button type="button" class="btn btn-lg btn-outline-danger border-0">
+        <small>{{currentLanguage?.cancel}}</small>
+      </button>
+    </div>
+  </div>
+</div>

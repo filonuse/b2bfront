@@ -1,0 +1,140 @@
+<!--<div class="container-fluid">-->
+<!--<div class="category-main-container">-->
+
+<!--<div class="container">-->
+<!--<div class="category-main-head-container">-->
+
+<div class="card mt-5 pt-3 pb-0 mb-5 shadow-lg bg-white rounded border-0">
+  <div class="card-header bg-transparent border-0 pb-0 mb-0">
+    <div class="card-title d-flex flex-row justify-content-between align-items-center pb-0 mb-0">
+      <div>
+        <span class="font-weight-bold h3 font-weight-bold">{{currentLanguage?.goodsCategoriesList}}</span>
+      </div>
+      <div>
+        <button class="btn-lg btn btn-primary" (click)="openModal()">
+          <i class="material-icons font-weight-bold align-middle">add_circle_outline</i>
+          {{currentLanguage?.addCategory}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body pb-0">
+    <!--</div>-->
+    <div>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr style="background-color: #F2F2F2">
+          <th scope="col" class="small border-right-0">{{currentLanguage?.categories}}</th>
+          <th scope="col" class="small border-left-0">##</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let category of categoriesList">
+          <td class="align-middle border-right-0 font-weight-bold">{{category.name}}</td>
+          <td class="text-center align-middle border-left-0">
+
+            <span [id]="category.id + 'open'" class="open-popover h3" (click)="currentPop = category.id">...</span>
+            <div class="popover-container">
+              <div [id]="category.id + 'triangle'" class="triangle"></div>
+              <div [id]="category.id + 'pop'" class="popover-block">
+                <div class="edit-popover small text-primary" (click)="openModal(category)">{{currentLanguage?.edit}}
+                </div>
+                <div class="edit-popover small text-danger" (click)="deleteCategory(category)">{{currentLanguage?.delete
+                  || 'delete'}}
+                </div>
+              </div>
+            </div>
+
+            <!--<button [disabled]="loading" class="btn btn-sm btn-success" (click)="openModal(category)"><i-->
+            <!--class="font-weight-bold material-icons align-middle">create</i></button>-->
+            <!--<button [disabled]="loading" class="btn btn-sm btn-warning" (click)="deleteCategory(category)"><i-->
+            <!--class="font-weight-bold material-icons align-middle">close</i>-->
+            <!--</button>-->
+
+            <!--<i class="material-icons" (click)="deleteCategory(categories)">delete_forever</i>-->
+            <!--<i class="material-icons" (click)="openModal(categories)">create</i>-->
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<nav class="">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"
+        [ngClass]="{'disabled border-0': paginationModel.currentPage === paginationModel.firstPage}">
+      <a class="page-link border-0 mr-2 font-weight-bold" (click)="doPagination(paginationModel.currentPage - 1) "
+         style="color: #1D77C8">
+        <i class="material-icons align-middle">keyboard_arrow_left</i>
+        <u>{{currentLanguage?.first}}</u>
+      </a>
+    </li>
+    <li class="page-item mr-1 ml-1"
+        [ngClass]="{'custom-active custom-round-box p-0': paginationModel.currentPage === i + 1}"
+        *ngFor="let a of paginationModel.totalPages; let i = index">
+      <a class="page-link border-0 p-0 mr-1 ml-1 font-weight-bold" (click)="doPagination(a)">{{a}}</a>
+    </li>
+    <li class="page-item"
+        [ngClass]="{'disabled border-0': paginationModel.currentPage === paginationModel.lastPage}">
+      <a class="page-link border-0 ml-2 font-weight-bold" (click)="doPagination(paginationModel.currentPage + 1)"
+         style="color: #1D77C8">
+        <u>{{currentLanguage?.last}}</u>
+        <i class="material-icons align-middle m-0">keyboard_arrow_right</i>
+      </a>
+    </li>
+  </ul>
+</nav>
+<ngx-smart-modal identifier="newCategory" #newCategory class="p-0" [closable]="false">
+  <!--<h1>{{currentLanguage[categoryText] || 'EDIT CATEGORY'}}</h1>-->
+  <!--&lt;!&ndash;<form (submit)="editCategory()">&ndash;&gt;-->
+  <!--<input type="text" [(ngModel)]="categoryModel.name">-->
+  <!--<button (click)="newCategory.close()">{{currentLanguage?.cancel}}</button>-->
+  <!--<div *ngIf="editMode; then createButton else editButton"></div>-->
+  <!--<ng-template #createButton>-->
+  <!--<button (click)="addCategory()">{{currentLanguage?.save}}</button>-->
+  <!--</ng-template>-->
+  <!--<ng-template #editButton>-->
+  <!--<button (click)="editCategory()">{{currentLanguage?.edit}}</button>-->
+  <!--</ng-template>-->
+  <!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+  <div class="card border-0 bg-transparent p-0 m-0">
+    <div class="card-body bg-transparent p-0 m-0">
+      <div class="card-header bg-transparent">
+        <div class="card-title d-flex flex-row justify-content-between align-items-center">
+          <h5 class="font-weight-bold pt-2">
+            {{editMode ? currentLanguage?.addingCategory : currentLanguage?.edit}}
+          </h5>
+          <div class="close-custom text-center" (click)="newCategory.close()">
+
+            <i class="material-icons align-middle" style="font-size: 20px; font-weight: bold">close</i>
+          </div>
+        </div>
+        <h6 class="card-subtitle text-muted">{{editMode ? 'VVEDIT NAZVU KATEGORII': ''}}</h6>
+      </div>
+
+      <div class="form-group border-top-0 pl-1">
+        <label class="small text-muted pl-2 ml-2">{{currentLanguage?.title}}</label>
+        <input class="form-control form-control-lg border-0" [(ngModel)]="categoryModel.name">
+      </div>
+      <div class="card-footer bg-transparent text-center">
+        <div *ngIf="editMode; then createButton else editButton"></div>
+        <ng-template #createButton>
+          <button type="button" class="btn btn-lg btn-primary" (click)="addCategory()">
+            {{currentLanguage?.addCategory}}
+          </button>
+        </ng-template>
+        <ng-template #editButton>
+          <button type="button" class="btn btn-lg btn-primary" (click)="editCategory()">{{currentLanguage?.edit}}</button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
