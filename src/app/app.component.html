@@ -1,42 +1,5 @@
-<div class="container-fluid d-flex flex-column justify-content-between" style="height: 100%">
+<app-header></app-header>
 
-  <div class="row d-block border-bottom">
-    <div class="col pl-0 pr-0">
-      <app-header></app-header>
-    </div>
-  </div>
+<router-outlet></router-outlet>
 
-
-  <div class="row d-block">
-
-    <div class="container" *ngIf="isAuth">
-      <div class="row">
-        <div class="col-3 col-sm-3 col-md-3">
-          <div>
-            <app-side-menu></app-side-menu>
-          </div>
-
-        </div>
-
-        <div class="col-9" *ngIf="isAuth">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-
-    <div class="container" *ngIf="!isAuth">
-      <div class="row">
-        <div class="col">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row d-block border-top" [ngStyle]="currentRole === 'admin' ? {'visibility': 'hidden'} : {}">
-    <div class="col p-0 pr-0">
-      <app-footer></app-footer>
-    </div>
-  </div>
-</div>
+<app-footer></app-footer>

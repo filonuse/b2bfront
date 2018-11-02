@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="card" *ngIf="currentUser">
+    <div class="card-header">
+      <h5 class="card-title">
+        {{currentUser.name}}
+      </h5>
+      <span class="card-subtitle text-muted">
+        {{currentUser.username}}
+      </span>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          Address
+          <ul class="list-group-flush">
+            <li class="list-group-item">
+              <label class="small text-muted">city</label>
+              <div>{{currentUser.address.city}}</div>
+            </li>
+            <li class="list-group-item">
+              <label class="small text-muted">street</label>
+              <div>{{currentUser.address.street}}</div>
+            </li>
+            <li class="list-group-item">
+              <label class="small text-muted">suite</label>
+              <div>{{currentUser.address.suite}}</div>
+            </li>
+            <li class="list-group-item">
+              <label class="small text-muted">zipcode</label>
+              <div>{{currentUser.address.zipcode}}</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-6">
+          Contacts
+          <ul class="list-group-flush">
+            <li class="list-group-item">
+              <label class="small text-muted">phone</label>
+              <div>{{currentUser.phone}}</div>
+            </li>
+            <li class="list-group-item">
+              <label class="small text-muted">website</label>
+              <div>{{currentUser.website}}</div>
+            </li>
+          </ul>
+
+          Company
+          <ul class="list-group-flush">
+            <li class="list-group-item border-top-0">
+              <label class="small text-muted">company name</label>
+              <div>{{currentUser.company.name}}</div>
+            </li>
+
+            <li class="list-group-item border-top-0">
+              <label class="small text-muted">Catchphrase</label>
+              <div>{{currentUser.company.catchPhrase}}</div>
+            </li>
+
+            <li class="list-group-item border-top-0">
+              <label class="small text-muted">bs</label>
+              <div>{{currentUser.company.bs}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer bg-transparent">
+      <button class="btn btn-primary" (click)="getBack()">back</button>
+    </div>
+  </div>
+</div>

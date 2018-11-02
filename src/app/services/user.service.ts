@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpManagerService} from './http-manager.service';
-import {AUTH_API} from '../config/auth.api.config';
 import {Observable} from 'rxjs';
+import {USER_API} from '../config/user.api.config';
 
 @Injectable()
 
-export class AuthService {
+export class UserService {
   constructor(private http: HttpManagerService) {
   }
 
-  public logIn(loginData): Observable<any> {
-    return this.http.postRequest(AUTH_API.logIn, loginData, true);
+  public getById(id): Observable<any> {
+    return this.http.getRequest(USER_API.getById(id));
   }
+
 }

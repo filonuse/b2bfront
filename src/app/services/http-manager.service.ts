@@ -1,9 +1,8 @@
-import {ErrorHandler, Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {BASE_URL_API} from '../config/base-url.config';
-import 'rxjs/add/operator/catch';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {URL_CONFIG} from '../config/url-config';
+import {Observable} from 'rxjs';
 
-const baseUrl = BASE_URL_API.baseUrl;
 
 @Injectable()
 
@@ -18,25 +17,25 @@ export class HttpManagerService {
   constructor(private http: HttpClient) {
   }
 
-  public getRequest(serviceUrl) {
-    const url = baseUrl + serviceUrl;
+  public getRequest(serviceUrl): Observable<any> {
+    const url = URL_CONFIG.baseUrl + serviceUrl;
     return this.http.get(url, this.options);
   }
 
-  public postRequest(serviceUrl, serviceBody) {
-    const url = baseUrl + serviceUrl;
+  public postRequest(serviceUrl, serviceBody, auth?): Observable<any> {
+    const url = auth ? URL_CONFIG.authBaseUrl + serviceUrl : URL_CONFIG.baseUrl + serviceUrl;
     const body = JSON.stringify(serviceBody);
     return this.http.post(url, body, this.options);
   }
 
-  public putRequest(serviceUrl, serviceBody) {
-    const url = baseUrl + serviceUrl;
+  public putRequest(serviceUrl, serviceBody): Observable<any> {
+    const url = URL_CONFIG.baseUrl + serviceUrl;
     const body = JSON.stringify(serviceBody);
     return this.http.put(url, body, this.options);
   }
 
-  public deleteRequest(serviceUrl) {
-    const url = baseUrl + serviceUrl;
+  public deleteRequest(serviceUrl): Observable<any> {
+    const url = URL_CONFIG.baseUrl + serviceUrl;
     return this.http.delete(url, this.options);
   }
 

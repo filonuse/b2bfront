@@ -1,0 +1,12 @@
+<div class="container-fluid w-100">
+  <div class="row">
+    <div class="col-11">
+      <h3>Header of application</h3>
+    </div>
+    <div class="col" *ngIf="isAuth()">
+      <button class="btn btn-danger align-self-end" (click)="logOut()">log out</button>
+    </div>
+
+  </div>
+
+</div>

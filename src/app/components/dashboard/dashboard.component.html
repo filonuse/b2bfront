@@ -1,0 +1,47 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col bg-light">
+      <nav class="nav">
+        <span class="nav-link" (click)="changeRequest(requests.POSTS.value)">Posts</span>
+<!--        
+        <span class="nav-link" (click)="changeRequest(requests.COMMENTS.value)">Comments</span>
+        <span class="nav-link" (click)="changeRequest(requests.ALBUMS.value)">Albums</span>
+        <span class="nav-link" (click)="changeRequest(requests.PHOTOS.value)">Photos</span>
+-->
+      </nav>
+    </div>
+  </div>
+
+  <span><button class="btn btn-success" *ngIf="requestData === requests.POSTS.value" (click)="addItem()">
+    add new post
+  </button></span>
+  <div class="row">
+    <div class="col text-center">
+      <div class="table">
+        <table class="table-hover w-100">
+          <thead>
+          <th *ngFor="let header of tableHeaders">
+            {{header}}
+          </th>
+          <th>Edit</th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of itemsList | slice:slicer.startItem:slicer.endItem">
+            <td *ngFor="let cell of tableHeaders">
+              <span *ngIf="cell === 'userId'" (click)="getInfoAboutUser(item[cell])">{{item[cell]}}</span>
+              {{cell !== 'userId' ? item[cell] : ''}}
+              <img *ngIf="cell === 'thumbnailUrl'" [src]="item[cell]">
+            </td>
+            <td class="align-middle">
+              <button class="btn btn-warning" (click)="editItem(item)">edit</button>
+              <button class="btn btn-danger" (click)="deleteItem(item)">delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-primary" (click)="moreItems()">more items</button>
+    </div>
+  </div>
+</div>

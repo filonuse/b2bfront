@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpManagerService} from './http-manager.service';
-import {AUTH_API} from '../config/auth.api.config';
 import {Observable} from 'rxjs';
+import {POSTS_API} from '../config/posts.api.config';
 
 @Injectable()
 
-export class AuthService {
+export class PostsService {
   constructor(private http: HttpManagerService) {
   }
 
-  public logIn(loginData): Observable<any> {
-    return this.http.postRequest(AUTH_API.logIn, loginData, true);
+  public getAll(requestData): Observable<any> {
+    return this.http.getRequest(POSTS_API.getAll(requestData));
   }
 }
